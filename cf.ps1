@@ -1,6 +1,9 @@
 param (
     [Parameter(Mandatory = $true)]
-    [string]$ip
+    [string]$ip,
+
+    [Parameter(Mandatory = $true)]
+    [string]$domain
 )
 
 # Validate the provided IP address format
@@ -9,12 +12,12 @@ if (-not ($ip -match '^(\d{1,3}\.){3}\d{1,3}$') -or $ip -split '\.' | ForEach-Ob
     exit 1
 }
 
-# Set your Cloudflare API token, Zone ID, and domain/subdomain details
-$apiToken = "your_api_token_here"
-$zoneId = "your_zone_id_here"
-$domainName = "subdomain.example.com"
+# Set your Cloudflare API token and Zone ID
+$apiToken = ""
+$zoneId = ""
 
 $newIPAddress = $ip  # Use the provided IP address
+$domainName = $domain  # Use the provided domain
 
 # Get the existing DNS record for the subdomain
 $response = Invoke-RestMethod -Method GET `
